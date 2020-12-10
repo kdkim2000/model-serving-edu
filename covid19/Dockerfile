@@ -12,7 +12,7 @@ RUN pip install -r /requirements.txt
 #RUN pip install --upgrade pip
 #RUN pip install -r /requirements.txt
 
-#ADD . /app
+ADD . /app
 WORKDIR /app
 
 EXPOSE 5000

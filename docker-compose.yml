@@ -2,19 +2,19 @@ version: '2.3'
 
 services:
 
-  tf2svg1:    # tf serving CPU, without GPU
+ #tf2svg1:    # tf serving CPU, without GPU
     #build:
     #  context: ./covid19/covid19_models
-    image: tensorflow/serving
-    hostname: tf2svg1
-    environment:
-      - MODEL_NAME=covid19
-    restart: on-failure
-    ports:
-      - 8511:8501 # tensorflow servring port
-      - 8510:8500 # grpc port
-    volumes:
-      - ./covid19/head-base-covid:/models/covid19
+    #image: tensorflow/serving
+    #hostname: tf2svg1
+    #environment:
+    #  - MODEL_NAME=covid19
+    #restart: on-failure
+    #ports:
+    #  - 8511:8501 # tensorflow servring port
+    #  - 8510:8500 # grpc port
+    #volumes:
+    #  - ./covid19/head-base-covid:/models/covid19
 
   flask:    # flask server for covid19 service web pages and APIs, with backend tensorflow servering
     build:

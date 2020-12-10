@@ -187,7 +187,8 @@ ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg', 'PDF', 'PNG', 'JPG', 'JPE
 
 # covid_pneumo_model = load_model('./models/inceptionv3_saved.h5') #inceptionv3_saved.h5, covid_pneumo_model.h5
 # covid_pneumo_model = load_model('./models/inceptionv3.h5')
-covid_pneumo_model = load_model('./models/inceptionv3_base.h5')
+#covid_pneumo_model = load_model('./models/inceptionv3_base.h5')
+covid_pneumo_model = ""
 
 app = Flask(__name__)
 CORS(app)
@@ -276,9 +277,12 @@ def covid_classifier_model2(img_path, filename):
     requests.Session.trust_env = False
 
     #MODEL2_API_URL is tensorflow serving URL in another docker
-    HEADERS = {'content-type': 'application/json','Host': 'covid19.myspace.example.com'}
+    HEADERS = {
+            'content-type': 'application/json',
+            'Host': 'covid19.myspace.example.com'
+            }
     #MODEL2_API_URL = 'http://127.0.0.1:8511/v1/models/covid19/versions/1:predict'
-    MODEL2_API_URL = 'http://34.97.131.149:32380/v1/models/covid19'
+    MODEL2_API_URL = 'http://34.97.131.149:32380/v1/models/covid19:predict'
     CLASS_NAMES = ['Covid19', 'Normal_Lung', 'Pneumonia_Bacterial_Lung']
 
     logging.warning("****** Tenserflow Serving Request  *****")
