@@ -7,20 +7,6 @@ RUN apt-get update && apt-get -o Acquire::BrokenProxy="true" -o Acquire::http::N
 
 ADD requirements.txt /
 
-ADD imageio-2.9.0-py3-none-any.whl /
-ADD tensorflow-2.3.1-cp36-cp36m-manylinux2010_x86_64.whl /
-ADD numpy-1.18.4-cp36-cp36m-manylinux1_x86_64.whl /
-ADD opencv_python-4.4.0.46-cp36-cp36m-manylinux2014_x86_64.whl /
-ADD pandas-1.1.4-cp36-cp36m-manylinux1_x86_64.whl /
-ADD matplotlib-3.3.3-cp36-cp36m-manylinux1_x86_64.whl /
-ADD tensorboard-2.4.0-py3-none-any.whl /
-ADD grpcio-1.34.0-cp36-cp36m-manylinux2010_x86_64.whl /
-ADD Pillow-8.0.1-cp36-cp36m-manylinux1_x86_64.whl /
-ADD h5py-2.10.0-cp36-cp36m-manylinux1_x86_64.whl /
-ADD scikit_image-0.17.2-cp36-cp36m-manylinux1_x86_64.whl /
-ADD scipy-1.5.4-cp36-cp36m-manylinux1_x86_64.whl /
-ADD PyWavelets-1.1.1-cp36-cp36m-manylinux1_x86_64.whl /
-
 RUN pip install --upgrade pip
 
 RUN pip install wheel
