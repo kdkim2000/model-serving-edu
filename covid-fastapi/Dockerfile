@@ -29,7 +29,7 @@ RUN pip install -r /requirements.txt
 
 #RUN pip install --proxy 70.10.15.10:8080 -r /requirements.txt
 
-#ADD . /app
+ADD . /app
 WORKDIR /app
 
 #EXPOSE 5000
