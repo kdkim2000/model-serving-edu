@@ -340,7 +340,8 @@ async def query(request: Request, file: UploadFile = File(...)):
 
             # detection covid
             try:
-                prediction, prob, img_pred_name = test_rx_image_for_Covid19(covid_pneumo_model, img_path, filename)
+                #prediction, prob, img_pred_name = test_rx_image_for_Covid19(covid_pneumo_model, img_path, filename)
+		prediction, prob, img_pred_name = covid_classifier_model2(img_path, filename)
                 #prediction, prob, img_pred_name = generate_gradcam_heatmap(covid_pneumo_model, img_path, filename)
                 output_path = os.path.join(OUTPUT_FOLDER, img_pred_name)
                 #return render_template('index.html', prediction=prediction, confidence=prob, filename=image_name, xray_image=img_path, xray_image_with_heatmap=output_path)
@@ -381,16 +382,35 @@ async def covid_classifier_model2(request: Request):
     CLASS_NAMES = ['Covid19', 'Normal_Lung', 'Pneumonia_Bacterial_Lung']
 
     json_response = requests.post(MODEL2_API_URL, data=data, headers=HEADERS)
-    prediction = json.loads(json_response.text)['predictions']
-    prediction = np.argmax(np.array(prediction), axis=1)[0]
-    prediction = CLASS_NAMES[prediction]
+    #prediction = json.loads(json_response.text)['predictions']
+    #prediction = np.argmax(np.array(prediction), axis=1)[0]
+    #prediction = CLASS_NAMES[prediction]
     #my_logger.error("Something went wrong here?")
-    return JSONResponse({"model_name": "Customised IncpetionV3",
-                    "X-Ray_Classification_Result": prediction,
-                    'X-Ray_Classfication_Raw_Result': json.loads(json_response.text)['predictions'], #json_response.text,
-                    #'Input_Image': 'InputFilename',
-                    #'Output_Heatmap': 'OutputFilenameWithHeatmap'
-                    })
+    #return JSONResponse({"model_name": "Customised IncpetionV3",
+    #                "X-Ray_Classification_Result": prediction,
+    #                'X-Ray_Classfication_Raw_Result': json.loads(json_response.text)['predictions'], #json_response.text,
+    #                #'Input_Image': 'InputFilename',
+    #                #'Output_Heatmap': 'OutputFilenameWithHeatmap'
+    #                })
+    pred = json.loads(json_response.text)['predictions']
+    pred_neg = int(round(pred[0][1] * 100))
+    pred_pos = int(round(pred[0][0] * 100))
+
+    if np.argmax(pred, axis=1)[0] == 0:
+        prediction = 'Covid-19 POSITIVE'
+        prob = pred_pos
+    elif np.argmax(pred, axis=1)[0] == 2:
+        prediction = 'Covid-19 Negative; Bacterial Penumonia Positive'
+        prob = pred_pos
+    else:
+        prediction = 'Covid-19 Negative; Bacterial Penumonia Negative'
+        prob = pred_pos
+
+    img_pred_name = prediction + str(prob) + filename + '.png'  # prediction+'_Prob_'+str(prob)+'_Name_'+filename+'.png'
+    cv2.imwrite('static/result/' + img_pred_name, img_out)
+    cv2.imwrite('static/Image_Prediction.png', img_out)
+    print
+    return prediction, prob, img_pred_name
 
 # Model 2 inference endpoint with heatmap
 @app.post('/covid19/api/v1/predict/heatmap')
@@ -417,8 +437,10 @@ async def covid_classifier_model2_heatmap(request: Request):
                        "instances": img.tolist()})
 
     #MODEL2_API_URL is tensorflow serving URL in another docker
-    HEADERS = {'content-type': 'application/json'}
-    MODEL2_API_URL = 'http://127.0.0.1:8511/v1/models/covid19/versions/2:predict'
+    HEADERS = {'content-type': 'application/json',
+               'Host': 'covid19.myspace.example.com'}
+    #MODEL2_API_URL = 'http://127.0.0.1:8511/v1/models/covid19/versions/2:predict'
+    MODEL2_API_URL = 'http://34.97.131.149:32380/v1/models/covid19'
     CLASS_NAMES = ['Covid19', 'Normal_Lung', 'Pneumonia_Bacterial_Lung']
 
     json_response = requests.post(MODEL2_API_URL, data=data, headers=HEADERS)
