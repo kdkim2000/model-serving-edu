@@ -10,19 +10,19 @@ ADD requirements.txt /
 RUN pip install --upgrade pip
 
 RUN pip install wheel
-RUN pip install numpy-1.18.4-cp36-cp36m-manylinux1_x86_64.whl
-RUN pip install pandas-1.1.4-cp36-cp36m-manylinux1_x86_64.whl
-RUN pip install Pillow-8.0.1-cp36-cp36m-manylinux1_x86_64.whl
+RUN pip install numpy-1.18.4-cp36-cp36m-manylinux1_x86_64
+RUN pip install pandas-1.1.4-cp36-cp36m-manylinux1_x86_64
+RUN pip install Pillow-8.0.1-cp36-cp36m-manylinux1_x86_64
 RUN pip install imageio-2.9.0-py3-none-any.whl
-RUN pip install matplotlib-3.3.3-cp36-cp36m-manylinux1_x86_64.whl
-RUN pip install grpcio-1.34.0-cp36-cp36m-manylinux2010_x86_64.whl
-RUN pip install tensorboard-2.4.0-py3-none-any.whl
-RUN pip install h5py-2.10.0-cp36-cp36m-manylinux1_x86_64.whl 
-RUN pip install tensorflow-2.3.1-cp36-cp36m-manylinux2010_x86_64.whl 
-RUN pip install opencv_python-4.4.0.46-cp36-cp36m-manylinux2014_x86_64.whl
-RUN pip install scipy-1.5.4-cp36-cp36m-manylinux1_x86_64.whl
-RUN pip install PyWavelets-1.1.1-cp36-cp36m-manylinux1_x86_64.whl
-RUN pip install scikit_image-0.17.2-cp36-cp36m-manylinux1_x86_64.whl
+RUN pip install matplotlib-3.3.3-cp36-cp36m-manylinux1_x86_64
+RUN pip install grpcio-1.34.0-cp36-cp36m-manylinux2010_x86_64
+RUN pip install tensorboard-2.4.0-py3-none-any
+RUN pip install h5py-2.10.0-cp36-cp36m-manylinux1_x86_64
+RUN pip install tensorflow-2.3.1-cp36-cp36m-manylinux2010_x86_64 
+RUN pip install opencv_python-4.4.0.46-cp36-cp36m-manylinux2014_x86_64
+RUN pip install scipy-1.5.4-cp36-cp36m-manylinux1_x86_64
+RUN pip install PyWavelets-1.1.1-cp36-cp36m-manylinux1_x86_64
+RUN pip install scikit_image-0.17.2-cp36-cp36m-manylinux1_x86_64
 
 RUN pip install -r /requirements.txt
 #RUN pip install --upgrade pip
